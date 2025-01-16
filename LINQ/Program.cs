@@ -55,14 +55,7 @@ namespace LInqT
             Console.WriteLine("1. Виведiть усi елементи, крiм ArtObjects");
             Console.WriteLine(string.Join("\n", data
                 .Where(x => x is not ArtObject)  // Вибираємо елементи, що не є ArtObject
-                .Select(x =>
-                {
-                    if (x is IEnumerable<object> collection)  // Якщо елемент є колекцією (списком або масивом)
-                    {
-                        return string.Join(", ", collection.Select(item => item.ToString()));  // Виводимо елементи колекції
-                    }
-                    return x.ToString();  // Якщо елемент не колекція, просто виводимо його
-                })
+                .Select(x =>x.ToString())
             ));
             Console.WriteLine();
             Console.WriteLine("2.Виведiть iмена всiх акторiв");
@@ -137,10 +130,10 @@ namespace LInqT
             Console.WriteLine(string.Join("\n",
                 data
                 .OfType<Book>()
-                .Sum(book => book.Pages) // Вираховуємо суму сторінок у всіх книгах
+                .Sum(book => book.Pages) 
                 + data
-                .OfType<IEnumerable<int>>() // Вибираємо всі послідовності int
-                .SelectMany(seq => seq) // Розгортаємо всі послідовності
+                .OfType<IEnumerable<int>>()
+                .SelectMany(seq => seq)
                 .Sum()
                 ));
             Console.WriteLine();
