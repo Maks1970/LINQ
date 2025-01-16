@@ -54,7 +54,7 @@ namespace LInqT
 
             Console.WriteLine("1. Виведiть усi елементи, крiм ArtObjects");
             Console.WriteLine(string.Join("\n", data
-                .Where(x => x is not ArtObject)  // Вибираємо елементи, що не є ArtObject
+                .Where(x => x is not ArtObject) 
                 .Select(x =>x.ToString())
             ));
             Console.WriteLine();
@@ -121,7 +121,7 @@ namespace LInqT
                 data
                 .OfType<Film>()
                 .SelectMany(film => film.Actors, (film, actor) => new { FilmName = film.Name, ActorName = actor.Name }) // Отримуємо всі фільми з актором
-                .GroupBy(fa => fa.ActorName) // Групуємо за іменем актора
+                .GroupBy(fa => fa.ActorName) 
                 .Select(group => $"{group.Key}:\n" + string.Join("\n", group.Select(f => $"  - {f.FilmName}")))
                 ));
 
@@ -141,11 +141,11 @@ namespace LInqT
             Console.WriteLine(string.Join("\n",
             data
             .OfType<Book>()
-            .GroupBy(b => b.Author) // Групуємо книги за автором
+            .GroupBy(b => b.Author) 
             .ToDictionary
             (
-                g => g.Key, // Ключем буде автор
-                g => g.Select(b => b.Name).ToList() // Значенням буде список назв книг
+                g => g.Key,
+                g => g.Select(b => b.Name).ToList() 
             )
             .Select(kv => $"Автор: {kv.Key}\nКниги:\n{string.Join("\n", kv.Value)}")
              ));
@@ -154,14 +154,10 @@ namespace LInqT
             Console.WriteLine(string.Join("\n",
             data
             .OfType<Film>()
-            .Where(film => film.Actors.Any(actor => actor.Name == "Matt Damon")) // Фільтруємо фільми
+            .Where(film => film.Actors.Any(actor => actor.Name == "Matt Damon")) 
             .Select(film => film.Name)
              ));
 
-            //Console.WriteLine(string.Join(" ", data
-            //    .OfType<object>()
-            //    .Where(item => !(item is ArtObject))
-            //    .SelectMany(items => new IEnumerable<object>)));
 
             Console.WriteLine("1.Виведiть усi числа вiд 10 до 50 через кому");
             Console.WriteLine(string.Join(", ", Enumerable.Range(10, 41)));
